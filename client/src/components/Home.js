@@ -21,6 +21,7 @@ const Home = ({ user, logout }) => {
 
   const [conversations, setConversations] = useState([]);
   const [activeConversationId, setActiveConversationId] = useState(null);
+  const [activeOtherUserId, setActiveOtherUserId] = useState(null);
 
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -94,8 +95,9 @@ const Home = ({ user, logout }) => {
           };
         })
       );
+      setActiveConversationId(message.conversationId);
     },
-    [setConversations]
+    [setConversations, setActiveConversationId]
   );
 
   const markMessageAsRead = useCallback(
@@ -240,6 +242,7 @@ const Home = ({ user, logout }) => {
 
   const setActiveChat = (conversation) => {
     setActiveConversationId(conversation.id || null);
+    setActiveOtherUserId(conversation.otherUser.id);
     markConversationAsRead(conversation);
   };
 
@@ -311,6 +314,7 @@ const Home = ({ user, logout }) => {
 
   useEffect(() => {
     setActiveConversationId(null);
+    setActiveOtherUserId(null);
   }, [user?.id]);
 
   useEffect(() => {
@@ -347,6 +351,7 @@ const Home = ({ user, logout }) => {
         />
         <ActiveChat
           activeConversationId={activeConversationId}
+          activeOtherUserId={activeOtherUserId}
           conversations={conversations}
           user={user}
           postMessage={postMessage}

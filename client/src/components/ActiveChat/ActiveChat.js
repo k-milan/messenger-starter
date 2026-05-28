@@ -25,13 +25,17 @@ const ActiveChat = ({
   user,
   conversations,
   activeConversationId,
+  activeOtherUserId,
   postMessage,
 }) => {
   const classes = useStyles();
 
   const conversation = conversations
     ? conversations.find(
-        (conversation) => Number(conversation.id) === Number(activeConversationId)
+        (conversation) =>
+          Number(conversation.id) === Number(activeConversationId) ||
+          (!activeConversationId &&
+            Number(conversation.otherUser.id) === Number(activeOtherUserId))
       )
     : {};
 
