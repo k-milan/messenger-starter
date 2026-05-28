@@ -141,6 +141,12 @@ router.put("/:conversationId/read", async (req, res, next) => {
       return res.status(400).json({ error: "Message is not in conversation" });
     }
 
+    if (message.senderId === req.user.id) {
+      return res
+        .status(400)
+        .json({ error: "Cannot mark your own message as read" });
+    }
+
     const readField =
       conversation.user1Id === req.user.id
         ? "user1LastReadMessageId"

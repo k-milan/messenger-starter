@@ -8,6 +8,8 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexGrow: 8,
     flexDirection: "column",
+    minWidth: 0,
+    minHeight: 0,
   },
   chatContainer: {
     marginLeft: 41,
@@ -15,21 +17,21 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
-    justifyContent: "space-between",
+    minHeight: 0,
   },
 }));
 
 const ActiveChat = ({
   user,
   conversations,
-  activeConversation,
+  activeConversationId,
   postMessage,
 }) => {
   const classes = useStyles();
 
   const conversation = conversations
     ? conversations.find(
-        (conversation) => conversation.otherUser.username === activeConversation
+        (conversation) => Number(conversation.id) === Number(activeConversationId)
       )
     : {};
 
@@ -52,6 +54,9 @@ const ActiveChat = ({
                   messages={conversation.messages}
                   otherUser={conversation.otherUser}
                   userId={user.id}
+                  otherUserLastReadMessageId={
+                    conversation.otherUserLastReadMessageId
+                  }
                 />
                 <Input
                   otherUser={conversation.otherUser}
