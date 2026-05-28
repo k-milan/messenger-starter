@@ -42,14 +42,14 @@ jobs:
           wait-on-timeout: 60
 
       - name: Save screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-screenshots
           path: client/cypress/screenshots
 
       - name: Save videos
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos
